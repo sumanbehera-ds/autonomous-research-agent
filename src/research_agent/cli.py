@@ -10,15 +10,14 @@ from research_agent.memory import ResearchMemory
 from research_agent.pipeline import ResearchAgent
 
 
-KNOWN_COMMANDS = {"run", "history", "show", "-h", "--help"}
+HELP_ARGS = {"-h", "--help"}
 
 
 def main(argv: list[str] | None = None) -> int:
     load_dotenv()
 
     argv = list(sys.argv[1:] if argv is None else argv)
-    if argv and argv[0] not in KNOWN_COMMANDS:
-        argv = ["run", *argv]
+    argv = _normalize_argv(argv)
 
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -32,6 +31,79 @@ def main(argv: list[str] | None = None) -> int:
 
     parser.print_help()
     return 0
+
+
+def _normalize_argv(argv: list[str]) -> list[str]:
+    if not argv or argv[0] in HELP_ARGS:
+        return argv
+
+    command = argv[0]
+    if command == "run":
+        return argv
+    if command == "history":
+        return argv if _looks_like_history_command(argv[1:]) else ["run", *argv]
+    if command == "show":
+        return argv if _looks_like_show_command(argv[1:]) else ["run", *argv]
+    return ["run", *argv]
+
+
+def _looks_like_history_command(args: list[str]) -> bool:
+    if not args:
+        return True
+
+    index = 0
+    while index < len(args):
+        arg = args[index]
+        if arg in HELP_ARGS:
+            return True
+        if arg in {"--limit", "--memory-db"}:
+            if index + 1 >= len(args):
+                return True
+            index += 2
+            continue
+        if arg.startswith("--limit=") or arg.startswith("--memory-db="):
+            index += 1
+            continue
+        if arg.startswith("-"):
+            return True
+        return False
+    return True
+
+
+def _looks_like_show_command(args: list[str]) -> bool:
+    if not args:
+        return True
+
+    has_run_id = False
+    index = 0
+    while index < len(args):
+        arg = args[index]
+        if arg in HELP_ARGS:
+            return True
+        if arg == "--memory-db":
+            if index + 1 >= len(args):
+                return True
+            index += 2
+            continue
+        if arg.startswith("--memory-db="):
+            index += 1
+            continue
+        if not has_run_id and _is_int(arg):
+            has_run_id = True
+            index += 1
+            continue
+        if arg.startswith("-"):
+            return True
+        return False
+    return has_run_id
+
+
+def _is_int(value: str) -> bool:
+    try:
+        int(value)
+    except ValueError:
+        return False
+    return True
 
 
 def build_parser() -> argparse.ArgumentParser:

@@ -1,10 +1,11 @@
 # Autonomous Research Agent
 
-An autonomous AI research agent that accepts a user topic, creates a research plan, searches external sources, extracts relevant information, filters duplicate or irrelevant content, generates a structured research report, and stores previous research runs in local memory.
+An autonomous AI research agent for **Assessment Option 1**.
 
-This project was built for **Assessment Option 1: Autonomous Research Agent**.
-
----
+The agent accepts a research topic, creates an LLM-driven research plan,
+searches external sources, extracts useful content, removes duplicate or
+irrelevant information, and generates a structured report with sources and
+actionable insights.
 
 ## Author
 
@@ -14,118 +15,96 @@ This project was built for **Assessment Option 1: Autonomous Research Agent**.
 - LinkedIn: https://www.linkedin.com/in/suman-01-behera/
 - GitHub: https://github.com/sumanbehera-ds
 
----
-
 ## Problem Statement
 
-The objective is to build an autonomous AI agent that can collect information from external sources, analyze the collected content, and generate a structured, actionable summary with references.
+Build an autonomous AI agent capable of collecting information from external
+sources, analyzing the collected content, and generating a structured,
+actionable summary.
 
-The agent should not rely on hardcoded answers or predefined static outputs. It should use an LLM to reason over the user query, plan research steps, evaluate source content, and generate the final report.
+The solution should not use hardcoded answers or static responses. It should
+use an LLM to reason over the user's topic, decide what to search, evaluate
+source content, and generate the final report dynamically.
 
----
+## What The Agent Does
 
-## What This Agent Does
+The agent performs the following workflow:
 
-The agent accepts a research topic and autonomously performs the following steps:
-
-1. Understands the user's research goal using an LLM.
-2. Creates a research plan and search queries.
-3. Searches external sources.
-4. Fetches and extracts readable webpage content.
-5. Removes repeated URLs and duplicate source content.
-6. Filters irrelevant or low-value information.
-7. Uses the LLM to analyze the extracted evidence.
-8. Generates a structured report with:
-   - Key points
-   - Important findings
-   - References / sources
-   - Actionable insights
-   - Limitations
-9. Exports the report as Markdown.
-10. Optionally exports the report as PDF.
+1. Accepts a user research query or topic.
+2. Uses an LLM to understand the goal.
+3. Creates a research plan and search queries.
+4. Searches external sources.
+5. Fetches and extracts readable web content.
+6. Removes duplicate URLs and repeated source content.
+7. Filters irrelevant or low-value information.
+8. Uses the LLM to analyze the extracted evidence.
+9. Generates a structured report with key points, findings, sources, and
+   actionable insights.
+10. Exports the report as Markdown and optionally as PDF.
 11. Stores previous research runs in local SQLite memory.
-
----
 
 ## Key Features
 
-- LLM-based autonomous research planning
+- Autonomous LLM-based research planning
 - External web search
-- Webpage content extraction
+- Webpage fetching and content extraction
 - Duplicate source removal
 - Relevance filtering
-- Source-backed summarization
-- Markdown report export
-- Optional PDF report export
-- SQLite-based local memory
-- CLI interface
-- Test coverage with Pytest
+- Source-backed report generation
+- Markdown export
+- Optional PDF export
+- SQLite memory for previous runs
+- Command-line interface
+- Pytest test coverage
 - Supports local Ollama or OpenAI-compatible LLM APIs
-
----
 
 ## Architecture
 
 ```text
 User Topic
-   ↓
-LLM Research Planner
-   ↓
-Search Query Generation
-   ↓
-External Web Search
-   ↓
-Webpage Fetching and Text Extraction
-   ↓
-Duplicate and Relevance Filtering
-   ↓
-LLM Evidence Analysis
-   ↓
-Structured Report Generation
-   ↓
-Markdown / PDF Export
-   ↓
-SQLite Memory Storage
+  -> LLM Research Planner
+  -> Search Query Generation
+  -> External Web Search
+  -> Webpage Fetching and Text Extraction
+  -> Duplicate and Relevance Filtering
+  -> LLM Evidence Analysis
+  -> Structured Report Generation
+  -> Markdown / PDF Export
+  -> SQLite Memory Storage
 ```
-
----
 
 ## Project Structure
 
 ```text
 autonomous-research-agent/
-│
-├── src/
-│   └── research_agent/
-│       ├── cli.py          # Command-line interface
-│       ├── pipeline.py     # End-to-end autonomous workflow
-│       ├── llm.py          # LLM client setup
-│       ├── prompts.py      # Planner, analyzer, and synthesis prompts
-│       ├── search.py       # Web search providers
-│       ├── fetch.py        # Webpage fetching and text extraction
-│       ├── memory.py       # SQLite memory storage
-│       ├── exporters.py    # Markdown and PDF export
-│       ├── models.py       # Shared data models
-│       └── utils.py        # Utility functions
-│
-├── tests/
-│   ├── test_exporters.py
-│   ├── test_memory.py
-│   ├── test_pipeline.py
-│   └── test_utils.py
-│
-├── examples/
-│   ├── sample_report.md
-│   └── sample_report.pdf
-│
-├── .env.example
-├── .gitignore
-├── README.md
-├── pyproject.toml
-└── requirements.txt
+|-- src/
+|   `-- research_agent/
+|       |-- cli.py
+|       |-- pipeline.py
+|       |-- llm.py
+|       |-- prompts.py
+|       |-- search.py
+|       |-- fetch.py
+|       |-- memory.py
+|       |-- exporters.py
+|       |-- models.py
+|       `-- utils.py
+|
+|-- tests/
+|   |-- test_exporters.py
+|   |-- test_memory.py
+|   |-- test_pipeline.py
+|   `-- test_utils.py
+|
+|-- examples/
+|   |-- sample_report.md
+|   `-- sample_report.pdf
+|
+|-- .env.example
+|-- .gitignore
+|-- README.md
+|-- pyproject.toml
+`-- requirements.txt
 ```
-
----
 
 ## Tech Stack
 
@@ -139,27 +118,25 @@ autonomous-research-agent/
 - ReportLab
 - Pytest
 
----
-
 ## Installation
 
-### 1. Clone the Repository
+### 1. Clone The Repository
 
 ```bash
 git clone https://github.com/sumanbehera-ds/autonomous-research-agent.git
 cd autonomous-research-agent
 ```
 
-### 2. Create Virtual Environment
+### 2. Create A Virtual Environment
 
-For Windows PowerShell:
+Windows PowerShell:
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-For macOS/Linux:
+macOS/Linux:
 
 ```bash
 python -m venv .venv
@@ -173,31 +150,25 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
----
-
 ## Environment Configuration
 
-Copy the example environment file:
+Copy the example environment file.
 
-For Windows:
+Windows:
 
 ```powershell
 copy .env.example .env
 ```
 
-For macOS/Linux:
+macOS/Linux:
 
 ```bash
 cp .env.example .env
 ```
 
----
-
 ## LLM Configuration
 
 The project supports two execution modes.
-
----
 
 ### Option A: Use Local Ollama
 
@@ -223,9 +194,7 @@ ollama pull llama3.1
 
 Keep Ollama running while using the agent.
 
----
-
-### Option B: Use OpenAI or OpenAI-Compatible API
+### Option B: Use OpenAI Or OpenAI-Compatible API
 
 Example `.env`:
 
@@ -245,9 +214,8 @@ Optional search API:
 TAVILY_API_KEY=your_tavily_api_key_here
 ```
 
-If `TAVILY_API_KEY` is not provided, the agent falls back to DuckDuckGo-based search.
-
----
+If `TAVILY_API_KEY` is not provided, the agent falls back to DuckDuckGo-based
+search.
 
 ## Usage
 
@@ -281,8 +249,6 @@ Control search depth:
 research-agent run "AI agents for vulnerability management" --max-queries 3 --max-results-per-query 5
 ```
 
----
-
 ## View Previous Research Runs
 
 Show previous runs stored in local memory:
@@ -296,8 +262,6 @@ Show details for one saved run:
 ```bash
 research-agent show 1
 ```
-
----
 
 ## Output
 
@@ -319,9 +283,8 @@ Local memory is stored at:
 .agent_memory/research_history.sqlite3
 ```
 
-The memory database is intentionally ignored by Git because it is runtime-generated local data.
-
----
+The memory database is ignored by Git because it is runtime-generated local
+data.
 
 ## Sample Output
 
@@ -332,9 +295,8 @@ examples/sample_report.md
 examples/sample_report.pdf
 ```
 
-The sample report demonstrates the agent's ability to search, extract, analyze, summarize, cite sources, and export the final result.
-
----
+The sample report demonstrates that the agent can search, extract, analyze,
+summarize, cite sources, and export the final result.
 
 ## Run Tests
 
@@ -347,8 +309,6 @@ Expected result:
 ```text
 6 passed
 ```
-
----
 
 ## Why This Is Autonomous
 
@@ -363,14 +323,13 @@ The agent uses an LLM to:
 - Remove weak or irrelevant findings
 - Generate a structured final report
 
-The final answer changes based on the user's topic and the live information collected from external sources.
-
----
+The final answer changes based on the user's topic and the live information
+collected from external sources.
 
 ## Assessment Requirement Coverage
 
 | Requirement | Status |
-|---|---|
+| --- | --- |
 | Accept user query/topic | Completed |
 | Search external sources | Completed |
 | Extract relevant information | Completed |
@@ -384,17 +343,14 @@ The final answer changes based on the user's topic and the live information coll
 | Export PDF | Completed |
 | Store previous searches in memory | Completed |
 
----
-
 ## Limitations
 
 - Search quality depends on external search availability.
 - Some websites may block automated fetching.
 - LLM output quality depends on the configured model.
 - The agent stores local memory only; no cloud database is used.
-- The system is designed for research assistance, not final expert decision-making.
-
----
+- The system is designed for research assistance, not final expert
+  decision-making.
 
 ## Reviewer Notes
 
@@ -402,9 +358,8 @@ The final answer changes based on the user's topic and the live information coll
 - The agent performs real external search and webpage extraction.
 - The final report is generated dynamically by an LLM.
 - The code includes tests for core functionality.
-- The project can run with either a local Ollama model or an OpenAI-compatible API.
-
----
+- The project can run with either a local Ollama model or an
+  OpenAI-compatible API.
 
 ## License
 

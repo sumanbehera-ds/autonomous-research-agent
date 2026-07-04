@@ -6,8 +6,9 @@ Assessment Option 1: build an autonomous AI agent that collects information from
 
 **Suman Behera**
 
-- Portfolio / GitHub: https://github.com/sumanbehera-ds
-- LinkedIn: set `AUTHOR_LINKEDIN` in `.env` with your exact LinkedIn profile URL before final submission.
+- Portfolio: https://sumanbehera-ds.github.io/Suman-Portfolio/ 
+- LinkedIn: https://www.linkedin.com/in/suman-01-behera/
+-GitHub: https://github.com/sumanbehera-ds
 
 ## What This Agent Does
 

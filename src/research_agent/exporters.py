@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -14,9 +15,35 @@ from research_agent.utils import ensure_directory, slugify
 @dataclass
 class ReportExporter:
     output_dir: Path = Path("reports")
+    author_name: str | None = None
+    author_linkedin: str | None = None
+    author_portfolio: str | None = None
 
     def __post_init__(self) -> None:
+        self.output_dir = Path(self.output_dir)
+        self.author_name = self.author_name or _clean(os.getenv("AUTHOR_NAME"))
+        self.author_linkedin = self.author_linkedin or _clean(os.getenv("AUTHOR_LINKEDIN"))
+        self.author_portfolio = self.author_portfolio or _clean(os.getenv("AUTHOR_PORTFOLIO"))
         ensure_directory(self.output_dir)
+
+    def add_author_profile(self, markdown: str) -> str:
+        profile_lines = []
+        if self.author_name:
+            profile_lines.append(f"Author: {self.author_name}")
+        if self.author_linkedin:
+            profile_lines.append(f"LinkedIn: {self.author_linkedin}")
+        if self.author_portfolio:
+            profile_lines.append(f"Portfolio: {self.author_portfolio}")
+
+        report = markdown.strip()
+        if not profile_lines:
+            return report
+
+        profile = "\n".join(profile_lines)
+        lines = report.splitlines()
+        if lines and lines[0].startswith("# "):
+            return "\n".join([lines[0], "", profile, "", *lines[1:]]).strip()
+        return f"{profile}\n\n{report}".strip()
 
     def save_markdown(self, topic: str, markdown: str) -> Path:
         stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -87,3 +114,10 @@ def _escape(text: str) -> str:
         .replace("<", "&lt;")
         .replace(">", "&gt;")
     )
+
+
+def _clean(value: str | None) -> str | None:
+    if not value:
+        return None
+    value = value.strip()
+    return value or None

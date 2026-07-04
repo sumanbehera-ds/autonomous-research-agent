@@ -93,6 +93,7 @@ class ResearchAgent:
 
         self._emit("synthesize", "Synthesizing structured report")
         report = self._synthesize(topic, plan, useful_sources)
+        report = self.exporter.add_author_profile(report)
 
         self._emit("export", "Saving report files")
         markdown_path = self.exporter.save_markdown(topic, report)

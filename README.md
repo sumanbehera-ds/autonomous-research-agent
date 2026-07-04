@@ -2,6 +2,13 @@
 
 Assessment Option 1: build an autonomous AI agent that collects information from external sources, analyzes it, and generates a structured, actionable summary.
 
+## Author
+
+**Suman Behera**
+
+- Portfolio / GitHub: https://github.com/sumanbehera-ds
+- LinkedIn: set `AUTHOR_LINKEDIN` in `.env` with your exact LinkedIn profile URL before final submission.
+
 ## What This Agent Does
 
 The agent accepts a user research topic and autonomously:
@@ -80,6 +87,14 @@ The default `.env.example` is configured for Ollama:
 LLM_PROVIDER=ollama
 OLLAMA_MODEL=llama3.1
 OLLAMA_BASE_URL=http://localhost:11434
+```
+
+Optional author/profile details can be shown in generated reports:
+
+```env
+AUTHOR_NAME=Suman Behera
+AUTHOR_PORTFOLIO=https://github.com/sumanbehera-ds
+AUTHOR_LINKEDIN=https://www.linkedin.com/in/your-linkedin-profile
 ```
 
 Install Ollama from `https://ollama.com`, then pull a local model:

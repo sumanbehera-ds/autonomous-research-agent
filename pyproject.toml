@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Assessment Option 1: Autonomous Research Agent"
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+    { name = "Suman Behera", email = "beherasuman44444@gmail.com" },
+]
 dependencies = [
     "openai>=1.40.0",
     "httpx>=0.27.0",
@@ -16,7 +19,10 @@ dependencies = [
 [project.scripts]
 research-agent = "research_agent.cli:main"
 
+[project.urls]
+Repository = "https://github.com/sumanbehera-ds/autonomous-research-agent"
+Portfolio = "https://github.com/sumanbehera-ds"
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-
